@@ -43,7 +43,7 @@ export function ReactECharts({
   useEffect(() => {
     // Initialize chart
     let chart: ECharts | undefined;
-    fetch("/essos.project.json")
+    fetch("/dark.json")
       .then((res) => res.json())
       .then((json) => {
         if (chartRef.current !== null) {
