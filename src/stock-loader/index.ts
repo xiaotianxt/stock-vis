@@ -11,9 +11,6 @@ export const useDataLoaders = (
   size: number = 50
 ) => {
   const loaders = tscodes.map((tscode) => useDataLoader(tscode));
-  const startDates = useMemo(() => {
-    return loaders.map((loader) => loader.data?.[0]?.trade_date);
-  }, [loaders[0].data]);
   const { date, setDate } = useStockStore();
   const [slices, setSlices] = useState<StockData[][]>([]);
   const [months, setMonths] = useState<string[]>([]);
@@ -34,7 +31,7 @@ export const useDataLoaders = (
       months.push(date.format("YYYY-MM-DD"));
     }
     setMonths(months);
-    if (start > moment("20230131", "YYYYMMDD")) {
+    if (start > moment("20220631", "YYYYMMDD")) {
       setEnd(true);
     }
   };

@@ -16,16 +16,18 @@ export const useEventLoader = () => {
         const events = json as StockEvent[];
         setEvents(events.filter((event) => event.title));
       });
-  });
+  }, []);
 
   useEffect(() => {
+    const realDate = date?.clone()?.add(10, "months")?.format("YYYY-MM");
     const index = _.sortedIndexBy(
       events,
-      { date: date?.format("YYYY-MM") } as StockEvent,
+      { date: realDate } as StockEvent,
       (event) => event.date
     );
-    setEvent(events?.[index]);
-  }, [date, events]);
+    const event = events?.[index - 1];
+    setEvent(event);
+  }, [date]);
 
   return { event };
 };
