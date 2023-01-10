@@ -2,12 +2,13 @@ import { useEffect, useMemo } from "react";
 import { ReactECharts } from "./ReactEcharts";
 import { EChartsOption } from "echarts";
 import { useDataLoaders } from "./stock-loader";
+import { useEventLoader } from "./event-loader";
 
 export const Index = () => {
   const files = ["out000002.SZ", "outSSEC", "outSZREI"];
   const names = ["万达", "上证指数", "房地产指数"];
   // load data
-  const { slices, next, weeks } = useDataLoaders(files, 1, 10);
+  const { slices, next, months, end } = useDataLoaders(files, 1, 10);
   const option: EChartsOption = useMemo<EChartsOption>(() => {
     const series: EChartsOption["series"] = slices.map((slice, idx) => {
       const name = names[idx];
@@ -17,7 +18,7 @@ export const Index = () => {
         stack: "Total",
         smooth: true,
         data: [
-          ...Array(weeks.length - slice.length).fill(undefined),
+          ...Array(months.length - slice.length).fill(undefined),
           ...slice.map((slice) => slice.close),
         ],
         yAxisIndex: idx === 0 ? 0 : 1,
@@ -28,7 +29,7 @@ export const Index = () => {
       xAxis: {
         type: "category",
         splitLine: { show: false },
-        data: weeks,
+        data: months,
       },
       yAxis: [
         {
@@ -48,11 +49,12 @@ export const Index = () => {
   }, [slices]);
 
   useEffect(() => {
+    if (end) return;
     const interval = setInterval(() => {
       next();
     }, 500);
     return () => clearInterval(interval);
-  }, [next]);
+  }, [next, end]);
 
   return (
     <div className="w-full h-full flex justify-center items-center font-medium bg-slate-700 text-slate-100">

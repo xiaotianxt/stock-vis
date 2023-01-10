@@ -1,7 +1,9 @@
 import _ from "lodash";
 import { DataLoad, StockData, toStockData } from "./types";
 import { useEffect, useMemo, useState } from "react";
-import { Moment } from "moment";
+import moment, { Moment } from "moment";
+import { useStore } from "zustand";
+import { useStockStore } from "../store";
 
 export const useDataLoaders = (
   tscodes: string[],
@@ -12,32 +14,32 @@ export const useDataLoaders = (
   const startDates = useMemo(() => {
     return loaders.map((loader) => loader.data?.[0]?.trade_date);
   }, [loaders[0].data]);
-  const [date, setDate] = useState<Moment>();
+  const { date, setDate } = useStockStore();
   const [slices, setSlices] = useState<StockData[][]>([]);
-  const [weeks, setWeeks] = useState<string[]>([]);
-
-  useEffect(() => {
-    setDate(_.min(startDates)?.subtract(size, "weeks")?.clone());
-  }, [startDates]);
+  const [months, setMonths] = useState<string[]>([]);
+  const [end, setEnd] = useState(false);
 
   const next = () => {
     if (date === undefined) return;
-    const start = date.clone().add(step, "weeks");
-    const end = start.clone().add(size, "weeks");
+    const start = date.clone().add(step, "months");
+    const end = start.clone().add(size, "months");
     const slices = loaders.map((loader, idx) => {
       loader.next(start, end);
       return loader.slice;
     });
     setDate(start);
     setSlices(slices);
-    const weeks = [];
-    for (let date = start.clone(); date < end; date.add(1, "weeks")) {
-      weeks.push(date.format("YYYY-MM-DD"));
+    const months = [];
+    for (let date = start.clone(); date < end; date.add(1, "months")) {
+      months.push(date.format("YYYY-MM-DD"));
     }
-    setWeeks(weeks);
+    setMonths(months);
+    if (start > moment("20230131", "YYYYMMDD")) {
+      setEnd(true);
+    }
   };
 
-  return { slices, next, weeks };
+  return { slices, next, months, end };
 };
 
 export const useDataLoader = (tscode: string) => {
