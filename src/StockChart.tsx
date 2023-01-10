@@ -57,7 +57,7 @@ export const Index = () => {
   }, [next, end]);
 
   return (
-    <div className="pt-10 w-full h-full flex justify-center items-center font-medium bg-slate-700 text-slate-100">
+    <div className="py-[5em] w-full h-full flex justify-center items-center font-medium bg-slate-700 text-slate-100">
       <ReactECharts option={option} className="h-full w-full" />
     </div>
   );

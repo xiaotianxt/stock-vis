@@ -31,7 +31,7 @@ export const useDataLoaders = (
       months.push(date.format("YYYY-MM-DD"));
     }
     setMonths(months);
-    if (start > moment("20220631", "YYYYMMDD")) {
+    if (start > moment("20220430", "YYYYMMDD")) {
       setEnd(true);
     }
   };
