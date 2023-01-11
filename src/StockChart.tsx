@@ -2,7 +2,6 @@ import { useEffect, useMemo } from "react";
 import { ReactECharts } from "./ReactEcharts";
 import { EChartsOption } from "echarts";
 import { useDataLoaders } from "./stock-loader";
-import { useEventLoader } from "./event-loader";
 import { useStockStore } from "./store";
 
 export const Index = () => {

@@ -1,5 +1,4 @@
 import { useEventLoader } from "./event-loader";
-import { StockEvent } from "./event-loader/types";
 
 export const Index = () => {
   const { event } = useEventLoader();
