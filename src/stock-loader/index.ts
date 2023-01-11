@@ -11,10 +11,9 @@ export const useDataLoaders = (
   size: number = 50
 ) => {
   const loaders = tscodes.map((tscode) => useDataLoader(tscode));
-  const { date, setDate } = useStockStore();
+  const { date, setDate, stop, setStop } = useStockStore();
   const [slices, setSlices] = useState<StockData[][]>([]);
   const [months, setMonths] = useState<string[]>([]);
-  const [end, setEnd] = useState(false);
 
   const next = () => {
     if (date === undefined) return;
@@ -32,11 +31,11 @@ export const useDataLoaders = (
     }
     setMonths(months);
     if (start > moment("20220430", "YYYYMMDD")) {
-      setEnd(true);
+      setStop(true);
     }
   };
 
-  return { slices, next, months, end };
+  return { slices, next, months, stop };
 };
 
 export const useDataLoader = (tscode: string) => {

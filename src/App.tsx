@@ -1,5 +1,6 @@
 import StockChart from "./StockChart";
 import MessageBox from "./MessageBox";
+import ControlPanel from "./ControlPanel";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       </div>
       <StockChart />
       <MessageBox />
+      <ControlPanel />
     </>
   );
 }
