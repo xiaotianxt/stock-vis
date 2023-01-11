@@ -33,14 +33,14 @@ export const Index = () => {
         className="block p-2.5 h-full bg-slate-200 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         onClick={() => setStop()}
       >
-        {stop ? "Start" : "Stop"}
+        {stop ? "继续" : "暂停"}
       </button>
       <button
         type="button"
         className="block p-2.5 h-full bg-slate-200 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         onClick={() => setDate(moment("2000-01-01", "YYYY-MM-DD"))}
       >
-        Restart
+        重置
       </button>
     </div>
   );
